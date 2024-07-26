@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { JobsService } from '@calo-task/service';
-import { JOB, JobCreationResponse } from 'src/types/common';
+import { JOB, JOB_STATUSES, JobCreationResponse } from 'src/types/common';
 import { UUID } from 'crypto';
 import { join } from 'path';
 import { createReadStream } from 'fs';
@@ -21,9 +21,13 @@ export class JobController {
   }
 
   @Get('/jobs/:id')
-  async get_job(@Param('id') id: UUID, @Res() res: Response) {
+  async get_job(
+    @Res() res: Response,
+    @Param('id') id: UUID,
+  ): Promise<Response> {
     const job = await this.jobService.getJobById(id);
-    const file = createReadStream(join(process.cwd(), job.filePath));
+    if (!job) return res.send(JOB_STATUSES.NO_RESOLVED);
+    const file = createReadStream(join(process.cwd(), job.toString()));
     file.pipe(res);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { JOB, JOB_STATUSES, JobCreationResponse } from 'src/types/common';
-import { existsSync, mkdir, writeFile } from 'fs';
+import { JOB, JobCreationResponse } from 'src/types/common';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 
 import { HelperService } from './helper.service';
 import { UUID } from 'crypto';
@@ -9,17 +9,13 @@ import { UUID } from 'crypto';
 export class JobsService {
   private jobsFilePath: string = 'data/jobs.json';
   private picturePath: string = 'data/pictures';
+  private dataPath: string = 'data';
 
   constructor(private readonly helperService: HelperService) {
-    if (!existsSync(this.jobsFilePath)) {
-      writeFile(this.jobsFilePath, JSON.stringify([]), (err) => {
-        if (err) Logger.debug(err.message);
-      });
-    }
-
-    mkdir(this.picturePath, { recursive: true }, (res) => {
-      if (res instanceof Error) Logger.debug('data folder found');
-    });
+    if (!existsSync(this.dataPath)) mkdirSync(this.dataPath);
+    if (!existsSync(this.picturePath)) mkdirSync(this.picturePath);
+    if (!existsSync(this.jobsFilePath))
+      writeFileSync(this.jobsFilePath, JSON.stringify([]));
   }
 
   async createJob(): Promise<JobCreationResponse> {
@@ -28,7 +24,6 @@ export class JobsService {
       this.helperService.savePicture(newId);
       return {
         id: newId,
-        job_status: JOB_STATUSES.PENDING,
       };
     } catch (err) {
       Logger.error(err);
@@ -39,9 +34,8 @@ export class JobsService {
     return await this.helperService.getJobList();
   }
 
-  async getJobById(id: UUID): Promise<JOB> {
-    const jobs: JOB[] = await this.helperService.getJobList();
-    const job = jobs.find((job) => job.id === id);
-    return job;
+  async getJobById(id: UUID): Promise<string | boolean> {
+    const isJobProcessed = await this.helperService.checkForPictureWithId(id);
+    return isJobProcessed;
   }
 }
