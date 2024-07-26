@@ -25,18 +25,7 @@ export class JobsService {
   async createJob(): Promise<JobCreationResponse> {
     try {
       const newId = crypto.randomUUID();
-      const getPicturePath =
-        await this.helperService.downloadRandomFoodPicture(newId);
-      const newJobData: JOB = {
-        id: newId,
-        filePath: getPicturePath,
-      };
-      const jobsArray: JOB[] = await this.helperService.getJobList();
-      jobsArray.push(newJobData);
-      writeFile(this.jobsFilePath, JSON.stringify(jobsArray), (err) => {
-        if (err) Logger.error(err);
-      });
-
+      this.helperService.savePicture(newId);
       return {
         id: newId,
         job_status: JOB_STATUSES.PENDING,
