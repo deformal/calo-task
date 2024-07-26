@@ -16,6 +16,5 @@
    2. Exception handler
    3. Generic types
 2. Coding the Jobs services 30 minutes
-   1. Seperating some helper logic from the services to
-3. Helper module 5 minutes
-4. Finalizing the controller
+   1. Seperating some helper logic from the services to helper module 5 minutes
+3. Finalizing the controller
