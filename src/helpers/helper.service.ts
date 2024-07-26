@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { JOB } from 'src/types/common';
-import { existsSync, readFileSync, writeFile, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFile } from 'fs';
 import axios from 'axios';
 import { UUID } from 'crypto';
 
@@ -27,7 +27,9 @@ export class HelperService {
         responseType: 'arraybuffer',
       });
       picPath = `${this.picturePath}/${id}.jpeg`;
-      writeFileSync(picPath, resData.data);
+      writeFile(picPath, resData.data, (err) => {
+        if (err) Logger.error(err);
+      });
     }, 10000);
   }
 
@@ -41,7 +43,7 @@ export class HelperService {
     });
   }
 
-  async checkForPictureWithId(id: UUID): Promise<string | null> {
+  checkForPictureWithId(id: UUID): string | null {
     const filePath = `${this.picturePath}/${id}.jpeg`;
     const isFileFound: string | null = existsSync(filePath) ? filePath : null;
     return isFileFound;

@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { JOB, JobCreationResponse } from 'src/types/common';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 
-import { HelperService } from './helper.service';
+import { HelperService } from '../helpers/helper.service';
 import { UUID } from 'crypto';
 
 @Injectable()
