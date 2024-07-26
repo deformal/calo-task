@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { JobController } from './controllers/jobs.controller';
+import { JobsService } from '@calo-task/service';
+import { HelperService } from './services/helper.service';
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [JobController],
+  providers: [JobsService, HelperService],
 })
 export class AppModule {}
