@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start:backend": "npx nx run backend:serve:development",
-    "start:frontend": "npx nx run frontend:serve:development"
+    "start:frontend": "npx nx run frontend:dev:development"
   },
   "private": true,
   "dependencies": {
