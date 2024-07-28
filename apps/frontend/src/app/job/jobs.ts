@@ -9,10 +9,10 @@ export class JobsApi {
     return jobs.data;
   }
 
-  public async geJob(id: string): Promise<string> {
+  public async geJob(id: string): Promise<string | null> {
     const jobUrl = `${this.url}/${id}`;
     const job = await axios.get(jobUrl);
-    if (job.data === 'NOT_RESOLVED') return job.data;
+    if (job.data === 'NOT_RESOLVED') return null;
     return jobUrl;
   }
 

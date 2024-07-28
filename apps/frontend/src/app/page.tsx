@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export default function Page() {
   const [jobs, setJobs] = useState<JOB[]>([]);
-  const [activeImage, setActiveImage] = useState<string>('');
+  const [activeImage, setActiveImage] = useState<string | null>(null);
   const [active, setActiveId] = useState<string>('');
 
   const jobApi = new JobsApi();
@@ -66,13 +66,17 @@ export default function Page() {
         </div>
       </div>
       <div className="img_container">
-        <Image
-          className="job_img"
-          alt="NOT_RESOLVED"
-          src={activeImage}
-          width={200}
-          height={200}
-        />
+        {activeImage ? (
+          <Image
+            className="job_img"
+            alt="NOT_RESOLVED"
+            src={activeImage}
+            width={200}
+            height={200}
+          />
+        ) : (
+          <h1 className="not_resolved">not resolved</h1>
+        )}
       </div>
     </div>
   );

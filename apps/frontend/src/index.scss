@@ -48,7 +48,11 @@ html,body{
             width: 99%;
             object-fit: contain;
         }
+        .not_resolved{
+            color: pink;
+        }
     }
+    
     .id_list{
         display: flex;
         flex-direction: column;
