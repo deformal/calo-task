@@ -2,6 +2,7 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 import { JobsApi } from './job/jobs';
 import { JOB } from '@calo/types';
+import Image from 'next/image';
 
 export default function Page() {
   const [jobs, setJobs] = useState<JOB[]>([]);
@@ -65,7 +66,13 @@ export default function Page() {
         </div>
       </div>
       <div className="img_container">
-        <img className="job_img" alt="NOT_RESOLVED" src={activeImage} />
+        <Image
+          className="job_img"
+          alt="NOT_RESOLVED"
+          src={activeImage}
+          width={200}
+          height={200}
+        />
       </div>
     </div>
   );
