@@ -16,7 +16,7 @@
    1. 30 - 45 minutes
    2. Choose Nx for the monorepo approach.
 2. Backend implimentation 25 minutes
-   1. Went with simple NestJs server following a MVC approach.
+   1. Went with simple NestJs server following a MMA approach.
    2. With more focus on the statement "keep it simple".
 3. Frontend implementation 1 hour
    1. Went with NextJs for the forntned setup
